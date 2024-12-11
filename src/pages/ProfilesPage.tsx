@@ -1,9 +1,10 @@
 import ProfileList from '@/components/ProfileList';
 import { getProfiles } from '@/storage/profile.storage';
+import type { Profile } from '@/types/model.types';
 import { useEffect, useState } from 'react';
 
 export default function ProfilesPage() {
-  const [profiles, setProfiles] = useState([]);
+  const [profiles, setProfiles] = useState<Profile[]>([]);
 
   useEffect(() => {
     setProfiles([...getProfiles()]);

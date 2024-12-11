@@ -1,3 +1,4 @@
+import type { Profile } from '@/types/model.types';
 import ProfileListItem from './ProfileListItem';
 
 interface ProfileListProps {
