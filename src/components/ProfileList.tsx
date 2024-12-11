@@ -23,9 +23,7 @@ export default function ProfileList({
           ))}
         </ul>
       ) : (
-        <p className="text-sm text-slate-500">
-          No profiles yet
-        </p>
+        <p className="text-sm text-slate-500">No profiles yet</p>
       )}
     </div>
   );
