@@ -6,20 +6,27 @@ interface ProfileListProps {
   onProfileLaunch: (profileId: string) => void;
 }
 
-export default function ProfileList(props: ProfileListProps) {
-  const { profiles, onProfileLaunch } = props;
-
+export default function ProfileList({
+  profiles,
+  onProfileLaunch,
+}: ProfileListProps) {
   return (
     <div className="bg-slate-50 p-4 rounded-lg">
-      <ul className="flex flex-col gap-3">
-        {profiles.map((p) => (
-          <ProfileListItem
-            key={p.id}
-            profile={p}
-            onLaunch={() => onProfileLaunch(p.id)}
-          />
-        ))}
-      </ul>
+      {profiles.length ? (
+        <ul className="flex flex-col gap-3">
+          {profiles.map((p) => (
+            <ProfileListItem
+              key={p.id}
+              profile={p}
+              onLaunch={() => onProfileLaunch(p.id)}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p className="text-sm text-slate-500">
+          No profiles yet
+        </p>
+      )}
     </div>
   );
 }
