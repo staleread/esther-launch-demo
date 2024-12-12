@@ -1,11 +1,13 @@
 import type { Profile, ProfileType } from '@/types/model.types';
-import { type FormEvent, useState } from 'react';
+import { ProfileAddSchema, ProfileAddDto } from '@/schemas/ui.schemas';
+import useFormValidation from '@/hooks/useFormValidation';
+import { FormEvent, useState } from 'react';
 import Modal from './ui/Modal';
 
 interface ProfileAddFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onValidSubmit: (p: Profile) => void;
+  onValidSubmit: (p: ProfileAddDto) => void;
 }
 
 export default function ProfileAddFormModal({
@@ -13,19 +15,24 @@ export default function ProfileAddFormModal({
   onClose,
   onValidSubmit,
 }: ProfileAddFormModalProps) {
-  const [idInput, setIdInput] = useState('');
-  const [nameInput, setNameInput] = useState('');
-  const [typeValue, setTypeValue] = useState<ProfileType>('gologin');
+  const {
+    formData,
+    setFormData,
+    formErrors,
+    validateForm,
+  } = useFormValidation(ProfileAddSchema, {
+    id: '',
+    name: '',
+    type: 'gologin',
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const profile: Profile = {
-      id: idInput,
-      name: nameInput,
-      type: typeValue,
-    };
-    onValidSubmit(profile);
+    if (!validateForm(formData)) {
+      return;
+    }
+    onValidSubmit(formData);
   };
 
   return (
@@ -42,9 +49,10 @@ export default function ProfileAddFormModal({
               type="text"
               className="border-2 rounded border-slate-300 focus:border-slate-600 p-2 text-sm"
               placeholder="Enter ID"
-              value={idInput}
-              onChange={(e) => setIdInput(e.target.value)}
+              value={formData.id}
+              onChange={(e) => setFormData({ ...formData, id: e.target.value})}
             />
+            <small className="text-red-400">{formErrors.id}</small>
           </div>
           <div className="flex flex-col gap-1 justify-between">
             <label htmlFor="profile-name" className="text-slate-500 text-xs">
@@ -55,9 +63,10 @@ export default function ProfileAddFormModal({
               type="text"
               className="border-2 rounded border-slate-300 focus:border-slate-600 p-2 text-sm"
               placeholder="Enter profile name"
-              value={nameInput}
-              onChange={(e) => setNameInput(e.target.value)}
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value})}
             />
+            <small className="text-red-400">{formErrors.name}</small>
           </div>
           <div className="flex flex-col gap-1 justify-between">
             <label htmlFor="profile-type" className="text-slate-500 text-xs">
@@ -66,13 +75,14 @@ export default function ProfileAddFormModal({
             <select
               id="profile-type"
               className="border-2 rounded border-slate-300 focus:border-slate-600 p-2 text-sm"
-              value={typeValue}
-              onChange={(e) => setTypeValue(e.target.value as ProfileType)}
+              value={formData.type}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value})}
             >
               <option value="gologin">GoLogin</option>
               <option value="multilogin">Multilogin</option>
               <option value="sessionBox">SessionBox One</option>
             </select>
+            <small className="text-red-400">{formErrors.type}</small>
           </div>
           <div className="flex flex-row gap-2 justify-between">
             <button
