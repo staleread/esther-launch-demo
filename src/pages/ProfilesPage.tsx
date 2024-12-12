@@ -37,6 +37,7 @@ export default function ProfilesPage() {
         onProfileLaunch={(id) => console.log(`Launching profile ${id}`)}
       />
       <ProfileAddFormModal
+        key={isProfileAddModalOpen}
         isOpen={isProfileAddModalOpen}
         onClose={() => setIsProfileAddModalOpen(false)}
         onValidSubmit={handleProfileAdd}
