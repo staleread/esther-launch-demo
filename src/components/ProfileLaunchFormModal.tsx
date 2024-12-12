@@ -38,7 +38,7 @@ export default function ProfileLaunchFormModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex flex-col gap-4">
-        <h1 className="text-lg font-bold">Add Profile</h1>
+        <h1 className="text-lg font-bold">Launch Profile</h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-1 justify-between">
             <label htmlFor="start-url" className="text-slate-500 text-xs">
