@@ -1,20 +1,20 @@
 import type { FormErrors } from '@/types/validation.types';
-import { z, ZodSchema, ZodIssue } from 'zod';
 import { useState } from 'react';
+import type { ZodSchema } from 'zod';
 
-export default function useFormValidation<T>(
+export default function useFormValidation<T extends {}>(
   schema: ZodSchema<T>,
   defaultValue: T,
 ): {
-  formData: T,
-  setFormData: (data: T) => void,
-  formErrors: FormErrors<T>,
-  validateForm: (data: T) => boolean,
+  formData: T;
+  setFormData: (data: T) => void;
+  formErrors: FormErrors<T>;
+  validateForm: (data: T) => boolean;
 } {
   const [formData, setFormData] = useState<T>(defaultValue);
-  const [formErrors, setFormErrors] = useState<FormErrors<T>>(getDefaultFormErrors(defaultValue));
-
-  console.log(formErrors);
+  const [formErrors, setFormErrors] = useState<FormErrors<T>>(
+    getDefaultFormErrors(defaultValue),
+  );
 
   const validateForm = (newValue: T): boolean => {
     const { success, errors } = validateBySchema(schema, newValue);
@@ -23,22 +23,22 @@ export default function useFormValidation<T>(
     setFormErrors(errors);
 
     return success;
-  }
+  };
 
   return {
     formData,
     setFormData,
     formErrors,
     validateForm,
-  }
+  };
 }
 
-function validateBySchema<T>(
+function validateBySchema<T extends {}>(
   schema: ZodSchema<T>,
   value: T,
 ): {
   success: boolean;
-  errors: FormErrors<T>
+  errors: FormErrors<T>;
 } {
   const errors = getDefaultFormErrors(value);
   const result = schema.safeParse(value);
@@ -47,21 +47,23 @@ function validateBySchema<T>(
     return {
       success: true,
       errors,
-    }
+    };
   }
 
-  result.error.issues.forEach(i => {
-    const key = i.path[0];
-    errors[key] = i.message;
-  });
+  const issues = result.error.issues;
+
+  for (const issue of issues) {
+    const key = issue.path[0] as keyof T;
+    errors[key] = issue.message;
+  }
 
   return {
     success: false,
     errors,
-  }
+  };
 }
 
-function getDefaultFormErrors(value: T): FormErrors<T> {
-  const entries = Object.entries(value).map(([k, v]) => [k, null]);
+function getDefaultFormErrors<T extends {}>(value: T): FormErrors<T> {
+  const entries = Object.entries(value).map(([k, _]) => [k, null]);
   return Object.fromEntries(entries);
 }

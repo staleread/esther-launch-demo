@@ -1,1 +1,1 @@
-export type FormErrors<T> = { [key: keyof T]: string | null };
+export type FormErrors<T> = Record<keyof T, string | null>;

@@ -1,8 +1,12 @@
 import { z } from 'zod';
 
-export const ProfileTypeSchema = z.enum(['gologin', 'multilogin', 'sessionBox']);
+export const ProfileTypeSchema = z.enum([
+  'gologin',
+  'multilogin',
+  'sessionBox',
+]);
 
-export type ProfileTypeDto = z.infer<ProfileTypeSchema>;
+export type ProfileTypeDto = z.infer<typeof ProfileTypeSchema>;
 
 export const ProfileAddSchema = z.object({
   id: z.string().min(3),
@@ -10,7 +14,7 @@ export const ProfileAddSchema = z.object({
   type: ProfileTypeSchema,
 });
 
-export type ProfileAddDto = z.infer<ProfileAddSchema>;
+export type ProfileAddDto = z.infer<typeof ProfileAddSchema>;
 
 const CookiePartitionKeySchema = z.object({
   hasCrossSiteAncestor: z.boolean().optional(),
@@ -47,4 +51,4 @@ export const ProfileLaunchSchema = z.object({
   cookies: z.array(CookieSchema),
 });
 
-export type ProfileLaunchDto = z.infer<ProfileLaunchSchema>;
+export type ProfileLaunchDto = z.infer<typeof ProfileLaunchSchema>;

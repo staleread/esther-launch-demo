@@ -1,7 +1,10 @@
-import type { Profile, ProfileType } from '@/types/model.types';
-import { ProfileAddSchema, ProfileAddDto } from '@/schemas/ui.schemas';
 import useFormValidation from '@/hooks/useFormValidation';
-import { FormEvent, useState } from 'react';
+import {
+  type ProfileAddDto,
+  ProfileAddSchema,
+  type ProfileTypeDto,
+} from '@/schemas/ui.schemas';
+import type { FormEvent } from 'react';
 import Modal from './ui/Modal';
 
 interface ProfileAddFormModalProps {
@@ -15,16 +18,12 @@ export default function ProfileAddFormModal({
   onClose,
   onValidSubmit,
 }: ProfileAddFormModalProps) {
-  const {
-    formData,
-    setFormData,
-    formErrors,
-    validateForm,
-  } = useFormValidation(ProfileAddSchema, {
-    id: '',
-    name: '',
-    type: 'gologin',
-  });
+  const { formData, setFormData, formErrors, validateForm } =
+    useFormValidation<ProfileAddDto>(ProfileAddSchema, {
+      id: '',
+      name: '',
+      type: 'gologin',
+    });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +49,7 @@ export default function ProfileAddFormModal({
               className="border-2 rounded border-slate-300 focus:border-slate-600 p-2 text-sm"
               placeholder="Enter ID"
               value={formData.id}
-              onChange={(e) => setFormData({ ...formData, id: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, id: e.target.value })}
             />
             <small className="text-red-400">{formErrors.id}</small>
           </div>
@@ -64,7 +63,9 @@ export default function ProfileAddFormModal({
               className="border-2 rounded border-slate-300 focus:border-slate-600 p-2 text-sm"
               placeholder="Enter profile name"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
             />
             <small className="text-red-400">{formErrors.name}</small>
           </div>
@@ -76,7 +77,12 @@ export default function ProfileAddFormModal({
               id="profile-type"
               className="border-2 rounded border-slate-300 focus:border-slate-600 p-2 text-sm"
               value={formData.type}
-              onChange={(e) => setFormData({ ...formData, type: e.target.value})}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  type: e.target.value as ProfileTypeDto,
+                })
+              }
             >
               <option value="gologin">GoLogin</option>
               <option value="multilogin">Multilogin</option>

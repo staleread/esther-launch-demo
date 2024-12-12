@@ -12,8 +12,8 @@ export default function ProfilesPage() {
     setProfiles([...getProfiles()]);
   }, []);
 
-  const handleProfileAdd = (profile: Profile) => {
-    addProfile(profile);
+  const handleProfileAdd = (dto: ProfileAddDto) => {
+    addProfile(dto);
     setIsProfileAddModalOpen(false);
     setProfiles([...getProfiles()]);
   };
