@@ -1,5 +1,7 @@
 import ProfileAddFormModal from '@/components/ProfileAddFormModal';
+import ProfileLaunchFormModal from '@/components/ProfileLaunchFormModal';
 import ProfileList from '@/components/ProfileList';
+import type { ProfileAddDto, ProfileLaunchDto } from '@/schemas/ui.schemas';
 import { addProfile, getProfiles } from '@/storage/profile.storage';
 import type { Profile } from '@/types/model.types';
 import { useEffect, useState } from 'react';
@@ -7,6 +9,9 @@ import { useEffect, useState } from 'react';
 export default function ProfilesPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [isProfileAddModalOpen, setIsProfileAddModalOpen] = useState(false);
+  const [profileToLaunchId, setProfileToLaunchId] = useState<string>('');
+  const [isProfileLaunchModalOpen, setIsProfileLaunchModalOpen] =
+    useState(false);
 
   useEffect(() => {
     setProfiles([...getProfiles()]);
@@ -16,6 +21,12 @@ export default function ProfilesPage() {
     addProfile(dto);
     setIsProfileAddModalOpen(false);
     setProfiles([...getProfiles()]);
+  };
+
+  const handleProfileLaunch = (_dto: ProfileLaunchDto) => {
+    console.log('Handling profile launch...');
+    setProfileToLaunchId('');
+    setIsProfileLaunchModalOpen(false);
   };
 
   return (
@@ -34,13 +45,23 @@ export default function ProfilesPage() {
       </div>
       <ProfileList
         profiles={profiles}
-        onProfileLaunch={(id) => console.log(`Launching profile ${id}`)}
+        onProfileLaunch={(id) => {
+          setProfileToLaunchId(id);
+          setIsProfileLaunchModalOpen(true);
+        }}
       />
       <ProfileAddFormModal
-        key={isProfileAddModalOpen}
+        key={+isProfileAddModalOpen}
         isOpen={isProfileAddModalOpen}
         onClose={() => setIsProfileAddModalOpen(false)}
         onValidSubmit={handleProfileAdd}
+      />
+      <ProfileLaunchFormModal
+        key={+isProfileLaunchModalOpen + 2}
+        profileId={profileToLaunchId}
+        isOpen={isProfileLaunchModalOpen}
+        onClose={() => setIsProfileLaunchModalOpen(false)}
+        onValidSubmit={handleProfileLaunch}
       />
     </div>
   );

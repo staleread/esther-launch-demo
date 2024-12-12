@@ -48,7 +48,21 @@ export type CookieDto = z.infer<typeof CookieSchema>;
 export const ProfileLaunchSchema = z.object({
   profileId: z.string(),
   startUrl: z.string().url(),
-  cookies: z.array(CookieSchema),
+  cookies: z.string().refine(
+    (json: string) => {
+      try {
+        const schema = z.array(CookieSchema);
+        const result = schema.safeParse(JSON.parse(json));
+
+        return result.success;
+      } catch (err: unknown) {
+        return false;
+      }
+    },
+    {
+      message: "Invalid cookies' format",
+    },
+  ),
 });
 
 export type ProfileLaunchDto = z.infer<typeof ProfileLaunchSchema>;
