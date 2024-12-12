@@ -30,7 +30,7 @@ export default function ProfilesPage() {
   };
 
   return (
-    <div className="flex flex-col gap-4 container mx-auto py-6 max-w-4xl">
+    <div className="flex flex-col gap-4 container mx-auto py-6 px-4 lg:px-0 max-w-4xl">
       <div className="flex flex-row justify-between gap-4">
         <h1 className="text-xl font-bold">Profiles</h1>
         <div className="flex flex-row justify-between gap-4">
