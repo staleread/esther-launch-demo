@@ -4,7 +4,11 @@ import ProfileLaunchFormModal from '@/components/ProfileLaunchFormModal';
 import ProfileLaunchingModal from '@/components/ProfileLaunchingModal';
 import ProfileList from '@/components/ProfileList';
 import type { ProfileAddDto, ProfileLaunchDto } from '@/schemas/ui.schemas';
-import { addProfile, getProfiles } from '@/storage/profile.storage';
+import {
+  addProfile,
+  deleteProfile,
+  getProfiles,
+} from '@/storage/profile.storage';
 import type { Profile } from '@/types/model.types';
 import { useEffect, useState } from 'react';
 
@@ -43,9 +47,14 @@ export default function ProfilesPage() {
     setProfiles([...getProfiles()]);
   };
 
-  const handleProfileLaunchBegin = (dto: ProfileLaunchDto) => {
-    console.log('Handling profile launch...');
-    setLaunchDto(dto);
+  const handleProfileDelete = (id: string) => {
+    deleteProfile(id);
+    setProfiles([...getProfiles()]);
+  };
+
+  const handleProfileLaunchRequest = (id: string) => {
+    setProfileToLaunchId(id);
+    setIsProfileLaunchModalOpen(true);
   };
 
   return (
@@ -64,10 +73,8 @@ export default function ProfilesPage() {
       </div>
       <ProfileList
         profiles={profiles}
-        onProfileLaunch={(id) => {
-          setProfileToLaunchId(id);
-          setIsProfileLaunchModalOpen(true);
-        }}
+        onProfileLaunch={handleProfileLaunchRequest}
+        onProfileDelete={handleProfileDelete}
       />
       <ProfileAddFormModal
         key={+isProfileAddModalOpen}
@@ -80,7 +87,7 @@ export default function ProfilesPage() {
         profileId={profileToLaunchId}
         isOpen={isProfileLaunchModalOpen}
         onClose={() => setIsProfileLaunchModalOpen(false)}
-        onValidSubmit={handleProfileLaunchBegin}
+        onValidSubmit={setLaunchDto}
       />
       <ProfileLaunchingModal
         key={+isProfileLaunchingModalOpen + 4}

@@ -3,6 +3,7 @@ import type { Profile, ProfileType } from '@/types/model.types.ts';
 interface ProfileListItemProps {
   profile: Profile;
   onLaunch: () => void;
+  onDelete: () => void;
 }
 
 const typeBadgeBackgrounds: Record<ProfileType, string> = {
@@ -30,13 +31,22 @@ export default function ProfileListItem(props: ProfileListItemProps) {
           <p className="text-xs">{typeBadgeNames[profile.type]}</p>
         </div>
       </div>
-      <button
-        type="button"
-        className="bg-yellow-400 px-3 py-1 rounded-md hover:bg-yellow-300 text-yellow-950"
-        onClick={onLaunch}
-      >
-        Launch
-      </button>
+      <div className="flex flex-row gap-2 justify-end items-center">
+        <button
+          type="button"
+          className="bg-yellow-400 px-3 py-1 rounded-md hover:bg-yellow-300 text-yellow-950"
+          onClick={onLaunch}
+        >
+          Launch
+        </button>
+        <button
+          type="button"
+          className="bg-slate-300 hover:bg-red-400 px-3 py-1 rounded-md text-slate-900 ease-linear duration-100"
+          onClick={onDelete}
+        >
+          Delete
+        </button>
+      </div>
     </li>
   );
 }

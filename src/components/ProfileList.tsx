@@ -4,11 +4,13 @@ import ProfileListItem from './ProfileListItem';
 interface ProfileListProps {
   profiles: Profile[];
   onProfileLaunch: (profileId: string) => void;
+  onProfileDelete: (profileId: string) => void;
 }
 
 export default function ProfileList({
   profiles,
   onProfileLaunch,
+  onProfileDelete,
 }: ProfileListProps) {
   return (
     <div className="bg-slate-50 p-4 rounded-lg">
@@ -19,6 +21,7 @@ export default function ProfileList({
               key={p.id}
               profile={p}
               onLaunch={() => onProfileLaunch(p.id)}
+              onDelete={() => onProfileDelete(p.id)}
             />
           ))}
         </ul>
