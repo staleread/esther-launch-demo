@@ -14,21 +14,31 @@ import { ZodError } from 'zod';
 export async function launchProfile(
   dto: ProfileLaunchDto,
 ): Promise<ProfileLaunchResult> {
-  const profile = getProfile(dto.profileId);
-  const apiDto: ProfileLaunchApiDto = {
-    ...dto,
-    profileType: profile.type,
-  };
-
   try {
+    const apiDto = toLaunchApiDto(dto);
     const response = await fetchProfileLaunch(apiDto);
     return resolveProfileLaunchResponse(response);
   } catch (err: unknown) {
+    if (err instanceof SyntaxError) {
+      throw err;
+    }
     if (err instanceof ZodError) {
       return 'Failed to parse response';
     }
     return 'Failed to ping the server';
   }
+}
+
+function toLaunchApiDto(uiDto: ProfileLaunchDto): ProfileLaunchApiDto {
+  const profile = getProfile(uiDto.profileId);
+  const cookies = JSON.parse(uiDto.cookies);
+
+  return {
+    profileId: uiDto.profileId,
+    profileType: profile.type,
+    startUrl: uiDto.startUrl,
+    cookies,
+  };
 }
 
 async function fetchProfileLaunch(
