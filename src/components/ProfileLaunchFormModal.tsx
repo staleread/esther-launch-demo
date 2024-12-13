@@ -13,6 +13,24 @@ interface ProfileLaunchFormModalProps {
   onValidSubmit: (dto: ProfileLaunchDto) => void;
 }
 
+const COOKIES_EXAMPLE = `[
+  {
+    "name": "my_cookie",
+    "value": "Some value",
+    "domain": "mydomain.com",
+    "hostOnly": true,
+    "path": "/view/",
+    "secure": false,
+    "httpOnly": false,
+    "sameSite": "lax",
+    "session": false,
+    "firstPartyDomain": "",
+    "partitionKey": null,
+    "expirationDate": 1768579558,
+    "storeId": null
+  }
+]`;
+
 export default function ProfileLaunchFormModal({
   profileId,
   isOpen,
@@ -65,23 +83,7 @@ export default function ProfileLaunchFormModal({
               rows={17}
               cols={30}
               className="border-2 rounded border-slate-300 focus:border-slate-600 p-2 text-sm"
-              placeholder="[
-  {
-    &quot;name&quot;: &quot;MSCC&quot;,
-    &quot;value&quot;: &quot;NR&quot;,
-    &quot;domain&quot;: &quot;.typescriptlang.org&quot;,
-    &quot;hostOnly&quot;: false,
-    &quot;path&quot;: &quot;/&quot;,
-    &quot;secure&quot;: true,
-    &quot;httpOnly&quot;: false,
-    &quot;sameSite&quot;: &quot;no_restriction&quot;,
-    &quot;session&quot;: false,
-    &quot;firstPartyDomain&quot;: &quot;&quot;,
-    &quot;partitionKey&quot;: null,
-    &quot;expirationDate&quot;: 1733996236,
-    &quot;storeId&quot;: null
-  }
-]"
+              placeholder={COOKIES_EXAMPLE}
               value={formData.cookies}
               onChange={(e) =>
                 setFormData({ ...formData, cookies: e.target.value })
