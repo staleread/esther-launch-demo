@@ -1,5 +1,7 @@
+import { launchProfile } from '@/api/profile-launch.api';
 import ProfileAddFormModal from '@/components/ProfileAddFormModal';
 import ProfileLaunchFormModal from '@/components/ProfileLaunchFormModal';
+import ProfileLaunchingModal from '@/components/ProfileLaunchingModal';
 import ProfileList from '@/components/ProfileList';
 import type { ProfileAddDto, ProfileLaunchDto } from '@/schemas/ui.schemas';
 import { addProfile, getProfiles } from '@/storage/profile.storage';
@@ -10,7 +12,11 @@ export default function ProfilesPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [isProfileAddModalOpen, setIsProfileAddModalOpen] = useState(false);
   const [profileToLaunchId, setProfileToLaunchId] = useState<string>('');
+  const [launchDto, setLaunchDto] = useState<ProfileLaunchDto | null>(null);
+  const [launchResult, setLaunchResult] = useState<string | null>(null);
   const [isProfileLaunchModalOpen, setIsProfileLaunchModalOpen] =
+    useState(false);
+  const [isProfileLaunchingModalOpen, setIsProfileLaunchingModalOpen] =
     useState(false);
 
   useEffect(() => {
@@ -23,11 +29,24 @@ export default function ProfilesPage() {
     setProfiles([...getProfiles()]);
   };
 
-  const handleProfileLaunch = (_dto: ProfileLaunchDto) => {
+  const handleProfileLaunchBegin = (dto: ProfileLaunchDto) => {
     console.log('Handling profile launch...');
-    setProfileToLaunchId('');
-    setIsProfileLaunchModalOpen(false);
+    setLaunchDto(dto);
   };
+
+  useEffect(() => {
+    if (!launchDto) {
+      return;
+    }
+    setIsProfileLaunchModalOpen(false);
+    setIsProfileLaunchingModalOpen(true);
+
+    setLaunchResult(null);
+    launchProfile(launchDto).then((result: string) => {
+      setLaunchResult(result);
+    });
+    setLaunchDto(null);
+  });
 
   return (
     <div className="flex flex-col gap-4 container mx-auto py-6 px-4 lg:px-0 max-w-4xl">
@@ -61,7 +80,13 @@ export default function ProfilesPage() {
         profileId={profileToLaunchId}
         isOpen={isProfileLaunchModalOpen}
         onClose={() => setIsProfileLaunchModalOpen(false)}
-        onValidSubmit={handleProfileLaunch}
+        onValidSubmit={handleProfileLaunchBegin}
+      />
+      <ProfileLaunchingModal
+        key={+isProfileLaunchingModalOpen + 4}
+        isOpen={isProfileLaunchingModalOpen}
+        onClose={() => setIsProfileLaunchingModalOpen(false)}
+        result={launchResult}
       />
     </div>
   );
