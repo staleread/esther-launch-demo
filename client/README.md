@@ -1,3 +1,3 @@
-# esther-local-launch
+# esther-local-launch client
 
-Demo app to mimic the "Continue button" use case for starting the profile with checkout session information
+Web interface for launching the profiles by passing the cookies and the start URL. The profiles are stored in local storage
