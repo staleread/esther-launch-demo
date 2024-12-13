@@ -9,6 +9,7 @@ import {
   deleteProfile,
   getProfiles,
 } from '@/storage/profile.storage';
+import type { ProfileLaunchResult } from '@/types/api.types';
 import type { Profile } from '@/types/model.types';
 import { useEffect, useState } from 'react';
 
@@ -17,7 +18,9 @@ export default function ProfilesPage() {
   const [isProfileAddModalOpen, setIsProfileAddModalOpen] = useState(false);
   const [profileToLaunchId, setProfileToLaunchId] = useState<string>('');
   const [launchDto, setLaunchDto] = useState<ProfileLaunchDto | null>(null);
-  const [launchResult, setLaunchResult] = useState<string | null>(null);
+  const [launchResult, setLaunchResult] = useState<ProfileLaunchResult | null>(
+    null,
+  );
   const [isProfileLaunchModalOpen, setIsProfileLaunchModalOpen] =
     useState(false);
   const [isProfileLaunchingModalOpen, setIsProfileLaunchingModalOpen] =

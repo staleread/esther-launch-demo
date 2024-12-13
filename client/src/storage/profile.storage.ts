@@ -6,6 +6,15 @@ export function getProfiles(): Profile[] {
   return rawProfiles ? JSON.parse(rawProfiles) : [];
 }
 
+export function getProfile(profileId: string): Profile {
+  const profile = getProfiles().find((p) => p.id === profileId);
+
+  if (!profile) {
+    throw new Error('Profile not found');
+  }
+  return profile;
+}
+
 export function addProfile(profile: Profile): void {
   const updatedProfiles = [...getProfiles(), profile];
   saveProfiles(updatedProfiles);
