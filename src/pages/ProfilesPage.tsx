@@ -23,17 +23,6 @@ export default function ProfilesPage() {
     setProfiles([...getProfiles()]);
   }, []);
 
-  const handleProfileAdd = (dto: ProfileAddDto) => {
-    addProfile(dto);
-    setIsProfileAddModalOpen(false);
-    setProfiles([...getProfiles()]);
-  };
-
-  const handleProfileLaunchBegin = (dto: ProfileLaunchDto) => {
-    console.log('Handling profile launch...');
-    setLaunchDto(dto);
-  };
-
   useEffect(() => {
     if (!launchDto) {
       return;
@@ -47,6 +36,17 @@ export default function ProfilesPage() {
     });
     setLaunchDto(null);
   });
+
+  const handleProfileAdd = (dto: ProfileAddDto) => {
+    addProfile(dto);
+    setIsProfileAddModalOpen(false);
+    setProfiles([...getProfiles()]);
+  };
+
+  const handleProfileLaunchBegin = (dto: ProfileLaunchDto) => {
+    console.log('Handling profile launch...');
+    setLaunchDto(dto);
+  };
 
   return (
     <div className="flex flex-col gap-4 container mx-auto py-6 px-4 lg:px-0 max-w-4xl">
