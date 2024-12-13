@@ -25,7 +25,7 @@ export default function ProfileLaunchFormModal({
           </div>
         )}
         {!!result?.length && (
-          <div className="bg-red-400 text-red-700 px-3 py-1 rounded-md border-2 border-red-500">
+          <div className="bg-red-400 text-white font-bold px-3 py-1 rounded-md border-2 border-red-500 max-w-64">
             Error: {result}
           </div>
         )}
