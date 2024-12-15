@@ -1,8 +1,8 @@
-import { z, type TypeOf } from 'zod';
 import { config } from '@/common/config/config';
+import { type TypeOf, z } from 'zod';
 import { getProfile } from './profile.storage';
-import type { ProfileLaunchDto } from './types/form.types';
 import type { CookieSchema } from './schemas/api.schemas';
+import type { ProfileLaunchDto } from './types/form.types';
 
 interface ProfileLaunchApiDto {
   profileId: string;
@@ -22,10 +22,12 @@ const ProfileLaunchResponseDtoSchema = z.union([
   }),
 ]);
 
-export async function launchProfile(formDto: ProfileLaunchDto): Promise<string> {
+export async function launchProfile(
+  formDto: ProfileLaunchDto,
+): Promise<string> {
   const dto: ProfileLaunchApiDto = {
     ...formDto,
-    cookies: JSON.parse(formDto.cookies)
+    cookies: JSON.parse(formDto.cookies),
   };
 
   try {
@@ -39,7 +41,7 @@ export async function launchProfile(formDto: ProfileLaunchDto): Promise<string> 
     });
 
     const json = await response.json();
-  
+
     return resolveLaunchResponse(json);
   } catch (err: unknown) {
     if (err instanceof SyntaxError) {
@@ -53,7 +55,7 @@ function getLaunchUrl(profileId: string): string {
   const profileType = getProfile(profileId).type;
   return `${config.launcherBaseUrl}/launch?profile-type=${profileType}`;
 }
-  
+
 function resolveLaunchResponse(json: unknown): string {
   const parseResult = ProfileLaunchResponseDtoSchema.safeParse(json);
 
@@ -62,7 +64,7 @@ function resolveLaunchResponse(json: unknown): string {
   }
   const dto = parseResult.data;
 
-  if ("statusCode" in dto) {
+  if ('statusCode' in dto) {
     return dto.message;
   }
   if (dto.url) {

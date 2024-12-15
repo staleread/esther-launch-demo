@@ -1,9 +1,9 @@
 import { Modal } from '@/common/components/Modal';
 import { useSchemaForm } from '@/common/hooks/useSchemaForm';
-import type { ProfileAddDto } from '../types/form.types';
+import type { FormEvent } from 'react';
 import { ProfileAddDtoSchema } from '../schemas/form.schemas';
 import type { ProfileType } from '../types/domain.types';
-import type { FormEvent } from 'react';
+import type { ProfileAddDto } from '../types/form.types';
 
 interface ProfileAddFormModalProps {
   isOpen: boolean;

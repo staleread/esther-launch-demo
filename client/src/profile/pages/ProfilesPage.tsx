@@ -1,16 +1,12 @@
 import { LoadingModal } from '@/common/components/LoadingModal';
-import { launchProfile } from '../profile.api';
+import { useEffect, useState } from 'react';
 import { ProfileAddFormModal } from '../components/ProfileAddFormModal';
 import { ProfileLaunchFormModal } from '../components/ProfileLaunchFormModal';
 import { ProfileList } from '../components/ProfileList';
-import type { ProfileAddDto, ProfileLaunchDto } from '../types/form.types';
-import {
-  addProfile,
-  deleteProfile,
-  getProfiles,
-} from '../profile.storage';
+import { launchProfile } from '../profile.api';
+import { addProfile, deleteProfile, getProfiles } from '../profile.storage';
 import type { Profile } from '../types/domain.types';
-import { useEffect, useState } from 'react';
+import type { ProfileAddDto, ProfileLaunchDto } from '../types/form.types';
 
 export function ProfilesPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);

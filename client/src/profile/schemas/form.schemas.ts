@@ -1,5 +1,5 @@
-import { ProfileTypeSchema, CookieSchema } from './api.schemas';
 import { z } from 'zod';
+import { CookieSchema, ProfileTypeSchema } from './api.schemas';
 
 export const ProfileAddDtoSchema = z.object({
   id: z.string().min(3),

@@ -1,8 +1,8 @@
 import { Modal } from '@/common/components/Modal';
 import { useSchemaForm } from '@/common/hooks/useSchemaForm';
+import type { FormEvent } from 'react';
 import { ProfileLaunchDtoSchema } from '../schemas/form.schemas';
 import type { ProfileLaunchDto } from '../types/form.types';
-import type { FormEvent } from 'react';
 
 interface ProfileLaunchFormModalProps {
   profileId: string;

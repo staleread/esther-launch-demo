@@ -7,11 +7,7 @@ interface LoadingModalProps {
   result: string | null;
 }
 
-export function LoadingModal({
-  isOpen,
-  result,
-  onClose,
-}: LoadingModalProps) {
+export function LoadingModal({ isOpen, result, onClose }: LoadingModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex flex-col gap-4">
