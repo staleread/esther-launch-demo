@@ -32,7 +32,12 @@ export async function launchProfile(formDto: ProfileLaunchDto): Promise<string> 
     const url = getLaunchUrl(dto.profileId);
     const body = JSON.stringify(dto);
 
-    const response = await fetch(url, { method: 'POST', body });
+    const response = await fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      body,
+    });
+
     const json = await response.json();
   
     return resolveLaunchResponse(json);
