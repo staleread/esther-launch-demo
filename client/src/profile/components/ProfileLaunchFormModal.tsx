@@ -1,9 +1,7 @@
-import Modal from '@/components/ui/Modal';
-import useFormValidation from '@/hooks/useFormValidation';
-import {
-  type ProfileLaunchDto,
-  ProfileLaunchSchema,
-} from '@/schemas/ui.schemas';
+import { Modal } from '@/common/components/Modal';
+import { useSchemaForm } from '@/common/hooks/useSchemaForm';
+import { ProfileLaunchDtoSchema } from '../schemas/form.schemas';
+import type { ProfileLaunchDto } from '../types/form.types';
 import type { FormEvent } from 'react';
 
 interface ProfileLaunchFormModalProps {
@@ -31,14 +29,14 @@ const COOKIES_EXAMPLE = `[
   }
 ]`;
 
-export default function ProfileLaunchFormModal({
+export function ProfileLaunchFormModal({
   profileId,
   isOpen,
   onClose,
   onValidSubmit,
 }: ProfileLaunchFormModalProps) {
   const { formData, setFormData, formErrors, validateForm } =
-    useFormValidation<ProfileLaunchDto>(ProfileLaunchSchema, {
+    useSchemaForm<ProfileLaunchDto>(ProfileLaunchDtoSchema, {
       profileId,
       startUrl: '',
       cookies: '',

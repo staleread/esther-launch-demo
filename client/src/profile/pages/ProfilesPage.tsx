@@ -1,26 +1,23 @@
-import { launchProfile } from '@/api/profile-launch.api';
-import ProfileAddFormModal from '@/components/ProfileAddFormModal';
-import ProfileLaunchFormModal from '@/components/ProfileLaunchFormModal';
-import ProfileLaunchingModal from '@/components/ProfileLaunchingModal';
-import ProfileList from '@/components/ProfileList';
-import type { ProfileAddDto, ProfileLaunchDto } from '@/schemas/ui.schemas';
+import { LoadingModal } from '@/common/components/LoadingModal';
+import { launchProfile } from '../profile.api';
+import { ProfileAddFormModal } from '../components/ProfileAddFormModal';
+import { ProfileLaunchFormModal } from '../components/ProfileLaunchFormModal';
+import { ProfileList } from '../components/ProfileList';
+import type { ProfileAddDto, ProfileLaunchDto } from '../types/form.types';
 import {
   addProfile,
   deleteProfile,
   getProfiles,
-} from '@/storage/profile.storage';
-import type { ProfileLaunchResult } from '@/types/api.types';
-import type { Profile } from '@/types/model.types';
+} from '../profile.storage';
+import type { Profile } from '../types/domain.types';
 import { useEffect, useState } from 'react';
 
-export default function ProfilesPage() {
+export function ProfilesPage() {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [isProfileAddModalOpen, setIsProfileAddModalOpen] = useState(false);
   const [profileToLaunchId, setProfileToLaunchId] = useState<string>('');
   const [launchDto, setLaunchDto] = useState<ProfileLaunchDto | null>(null);
-  const [launchResult, setLaunchResult] = useState<ProfileLaunchResult | null>(
-    null,
-  );
+  const [launchResult, setLaunchResult] = useState<string | null>(null);
   const [isProfileLaunchModalOpen, setIsProfileLaunchModalOpen] =
     useState(false);
   const [isProfileLaunchingModalOpen, setIsProfileLaunchingModalOpen] =
@@ -92,7 +89,7 @@ export default function ProfilesPage() {
         onClose={() => setIsProfileLaunchModalOpen(false)}
         onValidSubmit={setLaunchDto}
       />
-      <ProfileLaunchingModal
+      <LoadingModal
         key={+isProfileLaunchingModalOpen + 4}
         isOpen={isProfileLaunchingModalOpen}
         onClose={() => setIsProfileLaunchingModalOpen(false)}

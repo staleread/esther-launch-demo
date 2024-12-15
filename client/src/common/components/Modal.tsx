@@ -4,7 +4,7 @@ interface ModalProps {
   children: JSX.Element | JSX.Element[];
 }
 
-export default function Modal({ isOpen, onClose, children }: ModalProps) {
+export function Modal({ isOpen, onClose, children }: ModalProps) {
   return (
     <div
       className="flex justify-center items-center fixed top-0 left-0 size-full bg-[#94a3b899]"

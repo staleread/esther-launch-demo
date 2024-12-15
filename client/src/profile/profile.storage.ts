@@ -1,5 +1,5 @@
-import type { Profile } from '@/types/model.types';
-import config from '@/utils/config';
+import type { Profile } from './types/domain.types';
+import { config } from '@/common/config/config';
 
 export function getProfiles(): Profile[] {
   const rawProfiles = localStorage.getItem(config.profilesStorageId);

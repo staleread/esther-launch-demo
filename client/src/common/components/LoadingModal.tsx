@@ -1,17 +1,17 @@
-import Modal from '@/components/ui/Modal';
+import { Modal } from './Modal';
 
-interface ProfileLaunchingProps {
+interface LoadingModalProps {
   isOpen: boolean;
   onClose: () => void;
   // `null` when in progress, '' when success, error otherwise
   result: string | null;
 }
 
-export default function ProfileLaunchFormModal({
+export function LoadingModal({
   isOpen,
   result,
   onClose,
-}: ProfileLaunchingProps) {
+}: LoadingModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex flex-col gap-4">

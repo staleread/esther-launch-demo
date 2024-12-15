@@ -1,5 +1,5 @@
-import type { Profile } from '@/types/model.types';
-import ProfileListItem from './ProfileListItem';
+import type { Profile } from '../types/domain.types';
+import { ProfileListItem } from './ProfileListItem';
 
 interface ProfileListProps {
   profiles: Profile[];
@@ -7,7 +7,7 @@ interface ProfileListProps {
   onProfileDelete: (profileId: string) => void;
 }
 
-export default function ProfileList({
+export function ProfileList({
   profiles,
   onProfileLaunch,
   onProfileDelete,

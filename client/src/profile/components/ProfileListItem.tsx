@@ -1,4 +1,4 @@
-import type { Profile, ProfileType } from '@/types/model.types.ts';
+import type { Profile, ProfileType } from '../types/domain.types';
 
 interface ProfileListItemProps {
   profile: Profile;
@@ -18,7 +18,7 @@ const typeBadgeNames: Record<ProfileType, string> = {
   sessionBox: 'SessionBox One',
 };
 
-export default function ProfileListItem({
+export function ProfileListItem({
   profile,
   onLaunch,
   onDelete,

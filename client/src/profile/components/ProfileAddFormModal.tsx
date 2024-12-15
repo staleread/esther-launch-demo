@@ -1,11 +1,9 @@
-import useFormValidation from '@/hooks/useFormValidation';
-import {
-  type ProfileAddDto,
-  ProfileAddSchema,
-  type ProfileTypeDto,
-} from '@/schemas/ui.schemas';
+import { Modal } from '@/common/components/Modal';
+import { useSchemaForm } from '@/common/hooks/useSchemaForm';
+import type { ProfileAddDto } from '../types/form.types';
+import { ProfileAddDtoSchema } from '../schemas/form.schemas';
+import type { ProfileType } from '../types/domain.types';
 import type { FormEvent } from 'react';
-import Modal from './ui/Modal';
 
 interface ProfileAddFormModalProps {
   isOpen: boolean;
@@ -13,13 +11,13 @@ interface ProfileAddFormModalProps {
   onValidSubmit: (p: ProfileAddDto) => void;
 }
 
-export default function ProfileAddFormModal({
+export function ProfileAddFormModal({
   isOpen,
   onClose,
   onValidSubmit,
 }: ProfileAddFormModalProps) {
   const { formData, setFormData, formErrors, validateForm } =
-    useFormValidation<ProfileAddDto>(ProfileAddSchema, {
+    useSchemaForm<ProfileAddDto>(ProfileAddDtoSchema, {
       id: '',
       name: '',
       type: 'gologin',
@@ -80,7 +78,7 @@ export default function ProfileAddFormModal({
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  type: e.target.value as ProfileTypeDto,
+                  type: e.target.value as ProfileType,
                 })
               }
             >

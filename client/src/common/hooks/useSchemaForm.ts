@@ -1,8 +1,9 @@
-import type { FormErrors } from '@/types/validation.types';
 import { useState } from 'react';
 import type { ZodSchema } from 'zod';
 
-export default function useFormValidation<T extends {}>(
+export type FormErrors<T> = Record<keyof T, string | null>;
+
+export function useSchemaForm<T extends {}>(
   schema: ZodSchema<T>,
   defaultValue: T,
 ): {
