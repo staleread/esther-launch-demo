@@ -16,10 +16,10 @@ const ErrorResponseSchema = z.object({
 });
 
 const ProfileLaunchResponseDtoSchema = z.union([
+  ErrorResponseSchema,
   z.object({
     url: z.string().url().optional(),
   }),
-  ErrorResponseSchema,
 ]);
 
 export async function launchProfile(formDto: ProfileLaunchDto): Promise<string> {
