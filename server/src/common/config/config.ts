@@ -33,4 +33,13 @@ export const config = () => ({
       },
     },
   },
+  sessionBox: {
+    localApi: {
+      baseURL: process.env.SESSIONBOX_LOCAL_BASE_URL,
+      timeout: Number(process.env.SESSIONBOX_LOCAL_TIMEOUT),
+      headers: {
+        Authorization: process.env.SESSIONBOX_API_TOKEN,
+      },
+    },
+  },
 });

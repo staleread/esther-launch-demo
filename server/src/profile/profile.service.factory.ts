@@ -4,6 +4,7 @@ import type { ProfileService } from './domain.types';
 import type { ProviderType } from './dto.types';
 import { GologinProfileService } from './gologin-profile.service';
 import { MultiloginProfileService } from './multilogin-profile.service';
+import { SessionBoxProfileService } from './sessionbox-profile.service';
 
 const profileServices: Record<
   ProviderType,
@@ -13,6 +14,7 @@ const profileServices: Record<
 > = {
   multilogin: MultiloginProfileService,
   gologin: GologinProfileService,
+  sessionBox: SessionBoxProfileService,
 };
 
 @Injectable()
