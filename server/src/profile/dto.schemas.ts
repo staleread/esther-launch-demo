@@ -15,7 +15,7 @@ const SameSiteStatusSchema = z.enum([
   'unspecified',
 ]);
 
-const CookieSchema = z.object({
+export const CookieSchema = z.object({
   domain: z.string(),
   expirationDate: z.number().optional(),
   hostOnly: z.boolean(),
