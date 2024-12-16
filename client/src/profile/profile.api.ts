@@ -37,6 +37,9 @@ export async function launchProfile(
     const response = await fetch(url, {
       method: 'POST',
       mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body,
     });
 
@@ -53,7 +56,7 @@ export async function launchProfile(
 
 function getLaunchUrl(profileId: string): string {
   const profileType = getProfile(profileId).type;
-  return `${config.launcherBaseUrl}/launch?profile-type=${profileType}`;
+  return `${config.launcherBaseUrl}/profile/launch?provider-type=${profileType}`;
 }
 
 function resolveLaunchResponse(json: unknown): string {
