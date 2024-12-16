@@ -66,7 +66,9 @@ export class GologinProfileService implements ProfileService {
     profileId: string,
   ): ResultAsync<ProfileData, HttpError> {
     return ResultAsync.fromPromise(
-      this.webClient.get(`/browser/${profileId}`),
+      this.webClient
+        .get<ProfileData>(`/browser/${profileId}`)
+        .then((res) => res.data),
       toHttpError,
     );
   }
