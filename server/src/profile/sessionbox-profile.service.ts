@@ -51,7 +51,7 @@ export class SessionBoxProfileService implements ProfileService {
     @Inject(ConfigService) private readonly configService: ConfigService,
   ) {
     const localApiOptions = configService.get<AxiosRequestConfig>(
-      'multilogin.localApi',
+      'sessionBox.localApi',
     );
 
     if (!localApiOptions) {
@@ -87,7 +87,9 @@ export class SessionBoxProfileService implements ProfileService {
     dto: ActionTokenCreateDto,
   ): ResultAsync<ActionTokenDto, HttpError> {
     return ResultAsync.fromPromise(
-      this.localClient.post('/v1/action-token', dto),
+      this.localClient
+        .post<ActionTokenDto>('/v1/action-token', dto)
+        .then((res) => res.data),
       toHttpError,
     );
   }
