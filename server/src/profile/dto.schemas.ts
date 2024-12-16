@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-// TODO: Add gologin and sessionBox
-export const ProviderTypeSchema = z.enum(['multilogin']);
+// TODO: Add sessionBox
+export const ProviderTypeSchema = z.enum(['multilogin', 'gologin']);
 
 const CookiePartitionKeySchema = z.object({
   hasCrossSiteAncestor: z.boolean().optional(),

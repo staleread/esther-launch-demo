@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { ProfileService } from './domain.types';
 import type { ProviderType } from './dto.types';
+import { GologinProfileService } from './gologin-profile.service';
 import { MultiloginProfileService } from './multilogin-profile.service';
 
 const profileServices: Record<
@@ -11,6 +12,7 @@ const profileServices: Record<
   ) => ProfileService
 > = {
   multilogin: MultiloginProfileService,
+  gologin: GologinProfileService,
 };
 
 @Injectable()

@@ -1,5 +1,6 @@
-export const config = () => {
-  const multiloginOptions = {
+export const config = () => ({
+  port: process.env.PORT,
+  multilogin: {
     profiles: {
       folderId: process.env.MULTILOGIN_FOLDER_ID,
       wokrspaceId: process.env.MULTILOGIN_WORKSPACE_ID,
@@ -18,10 +19,18 @@ export const config = () => {
         Authorization: `Bearer ${process.env.MULTILOGIN_API_TOKEN}`,
       },
     },
-  };
-
-  return {
-    port: process.env.PORT,
-    multilogin: multiloginOptions,
-  };
-};
+  },
+  gologin: {
+    localApi: {
+      baseURL: process.env.GOLOGIN_LOCAL_BASE_URL,
+      timeout: Number(process.env.GOLOGIN_LOCAL_TIMEOUT),
+    },
+    webApi: {
+      baseURL: process.env.GOLOGIN_WEB_BASE_URL,
+      timeout: Number(process.env.GOLOGIN_WEB_TIMEOUT),
+      headers: {
+        Authorization: `Bearer ${process.env.GOLOGIN_API_TOKEN}`,
+      },
+    },
+  },
+});
