@@ -26,7 +26,7 @@ export const CookieSchema = z.object({
   name: z.string(),
   partitionKey: CookiePartitionKeySchema.nullish(),
   path: z.string(),
-  sameSite: SameSiteStatusSchema,
+  sameSite: SameSiteStatusSchema.nullable(),
   secure: z.boolean(),
   session: z.boolean(),
   storeId: z.string().nullable(),

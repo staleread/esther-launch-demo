@@ -11,12 +11,10 @@ const CookiePartitionKeySchema = z.object({
   topLevelSite: z.string().optional(),
 });
 
-const SameSiteStatusSchema = z.enum([
-  'no_restriction',
-  'lax',
-  'strict',
-  'unspecified',
-]);
+const SameSiteStatusSchema = z
+  .enum(['no_restriction', 'lax', 'strict', 'unspecified'])
+  .nullable()
+  .transform((val) => (val === null ? 'unspecified' : val));
 
 export const CookieSchema = z.object({
   domain: z.string(),
