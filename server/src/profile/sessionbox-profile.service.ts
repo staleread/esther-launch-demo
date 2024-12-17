@@ -1,16 +1,13 @@
 import type { HttpError } from '@/common/errors/http-error.interface';
 import { toHttpError } from '@/common/utils/axios-helpers';
-import { HttpStatus } from '@nestjs/common';
 import { Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
-  AxiosError,
   type AxiosInstance,
   type AxiosRequestConfig,
-  AxiosResponse,
   default as axios,
 } from 'axios';
-import { ResultAsync, errAsync, ok } from 'neverthrow';
+import { ResultAsync } from 'neverthrow';
 import type { ProfileService } from './domain.types';
 import type { Cookie } from './dto.types';
 import type {
@@ -63,13 +60,10 @@ export class SessionBoxProfileService implements ProfileService {
   public launchProfile(
     dto: ProfileLaunchDto,
   ): ResultAsync<ProfileLaunchResultDto, HttpError> {
-    const profileId = dto.profileId;
-
     const actionTokenCreateDto: ActionTokenCreateDto = {
-      action: 'open',
+      action: 'cloud',
       url: dto.startUrl,
-      profileId: dto.profileId,
-      cookies: dto.cookies.map(this.toApiCookie),
+      cookies: dto.cookies.map((c: Cookie) => this.toApiCookie(c)),
     };
 
     return this.createActionToken(actionTokenCreateDto).map(
@@ -95,10 +89,13 @@ export class SessionBoxProfileService implements ProfileService {
   }
 
   private toApiCookie(rawCookie: Cookie): ApiCookie {
+    const domain = rawCookie.domain;
+    const domainWithoutDot = domain.startsWith('.') ? domain.slice(1) : domain;
+
     return {
       name: rawCookie.name,
+      domain: domainWithoutDot,
       value: rawCookie.value,
-      domain: rawCookie.domain,
       expirationDate: rawCookie.expirationDate,
       hostOnly: rawCookie.hostOnly,
       httpOnly: rawCookie.httpOnly,
